@@ -1,7 +1,7 @@
 import styles from '@/styles/Home.module.css'
-import Layout from '../../../components/Layout'
-import { getProducts } from '../../../services/productsService'
-import CustomTable from '../../../components/CustomTable';
+import Layout from '../../components/Layout'
+import { getProducts } from '../../services/productsService'
+import CustomTable from '../../components/CustomTable';
 
 export default function Product({ products }) {
     return (

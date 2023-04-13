@@ -1,7 +1,7 @@
 import styles from '@/styles/Home.module.css'
-import Layout from '../../../components/Layout'
-import CustomForm from '../../../components/CustomForm'
-import { createProduct, describeProducts } from '../../../services/productsService'
+import Layout from '../../components/Layout'
+import CustomForm from '../../components/CustomForm'
+import { createProduct, describeProducts } from '../../services/productsService'
 
 export default function AddProduct({ formFields }) {
     return (
