@@ -1,13 +1,13 @@
 import styles from '@/styles/Home.module.css'
-import Layout from '../../components/Layout'
-import CustomForm from '../../components/CustomForm'
-import { createProduct, describeProducts } from '../../services/productsService'
+import Layout from '@/components/Layout'
+import CustomAddForm from '@/components/forms/CustomAddForm'
+import { createProduct, describeProducts } from '@/services/productsService'
 
 export default function AddProduct({ formFields }) {
     return (
         <Layout>
             <main className={styles.main}>
-                <CustomForm addFunction={createProduct} formFields={formFields}></CustomForm>
+                <CustomAddForm addFunction={createProduct} formFields={formFields}></CustomAddForm>
             </main>
         </Layout>
     )
