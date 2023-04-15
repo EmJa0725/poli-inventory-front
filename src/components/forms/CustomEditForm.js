@@ -1,8 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { useEffect, useState } from 'react';
-import { TextField, Button, Modal } from '@mui/material';
-import CustomAlert from '../alerts/CustomAlert';
+import { TextField, Button } from '@mui/material';
 
 const style = {
     position: 'absolute',
@@ -17,32 +16,24 @@ const style = {
     p: 4,
 };
 
-export default function CustomEditModal({ selectedProduct, editFunction, formFields, open, setOpen, setTableData }) {
+export default function CustomEditForm({ title, selectedItem, editFunction, formFields, setOpen, setTableData, alertProps, setAlertProps }) {
     const [updatedFormFields, setUpdatedFormFields] = useState([]);
     const dataTypes = {
         varchar: 'text',
         int: 'number',
         float: 'number'
     };
-    const [alertProps, setAlertProps] = useState({
-        show: false,
-        type: 'success',
-        message: '',
-        vertical: 'top',
-        horizontal: 'right',
-    });
 
     useEffect(() => {
         setUpdatedFormFields(mapDataTypes());
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedProduct]);
+    }, [selectedItem]);
 
     const mapDataTypes = () => {
-        console.log(formFields);
         return formFields.map((field) => {
             const { type, ...rest } = field;
             const updatedType = dataTypes[type];
-            return { ...rest, type: updatedType, value: selectedProduct[rest.name] };
+            return { ...rest, type: updatedType, value: selectedItem[rest.name] };
         });
     };
 
@@ -55,7 +46,7 @@ export default function CustomEditModal({ selectedProduct, editFunction, formFie
             });
             // Call andFunction here
             const res = await editFunction({
-                id: selectedProduct.id,
+                id: selectedItem.id,
                 ...Object.fromEntries(data.entries())
             });
 
@@ -72,7 +63,7 @@ export default function CustomEditModal({ selectedProduct, editFunction, formFie
 
             setTableData((prev) => {
                 return prev.map((row) => {
-                    if (row.id === selectedProduct.id) {
+                    if (row.id === selectedItem.id) {
                         return { ...row, ...Object.fromEntries(data.entries()) };
                     }
                     return row;
@@ -103,44 +94,40 @@ export default function CustomEditModal({ selectedProduct, editFunction, formFie
         });
     };
 
-    const handleClose = () => setOpen(false);
-
     return (
         <>
-            {alertProps.show && <CustomAlert alertProps={alertProps} setAlertProps={setAlertProps} />}
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style} alignItems="center">
-                    <h2 style={{ marginBottom: '1.5rem' }}>
-                        Edit Product
-                    </h2>
-                    <form onSubmit={handleSubmit}>
-                        {updatedFormFields?.map((field) => (
-                            <div key={field.name} >
-                                <TextField
-                                    margin='normal'
-                                    name={field.name}
-                                    label={field.name}
-                                    type={field.type}
-                                    value={field.value}
-                                    onChange={(e) => handleOnChange(e)}
-                                    inputProps={{ min: 0 }}
-                                    required
-                                />
-                            </div>
-                        ))}
-                        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
-                            <Button type="submit" variant="contained" color="primary">
-                                Submit
-                            </Button>
-                        </Box>
-                    </form>
-                </Box>
-            </Modal>
+            <Box sx={style} alignItems="center">
+                <h2 style={{ marginBottom: '1.5rem' }}>
+                    Edit {title}
+                </h2>
+                <form onSubmit={handleSubmit}>
+                    {updatedFormFields?.map((field) => (
+                        <div key={field.name} >
+                            <TextField
+                                margin='normal'
+                                name={field.name}
+                                label={field.name}
+                                type={field.type}
+                                value={field.value}
+                                onChange={(e) => handleOnChange(e)}
+                                inputProps={{ min: 0 }}
+                                required
+                            />
+                        </div>
+                    ))}
+                    <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
+                        <Button type="submit" variant="contained" color="primary">
+                            Submit
+                        </Button>
+                    </Box>
+                </form>
+            </Box>
         </>
     );
 }
+
+
+
+
+
+

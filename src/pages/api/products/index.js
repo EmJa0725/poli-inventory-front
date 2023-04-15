@@ -6,13 +6,13 @@ export default async function handler(req, res) {
     console.log(req.body);
     switch (req.method) {
       case 'GET':
-        response = await fetch('http://localhost:8000/api/products')
+        response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/products`)
         data = await response.json()
       
         res.status(200).json(data)
         break
       case 'POST':
-        response = await fetch('http://localhost:8000/api/products', {
+        response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/products`, {
           method: 'POST',
           body: JSON.stringify(req.body),
           headers: {
@@ -24,7 +24,7 @@ export default async function handler(req, res) {
         res.status(200).json(data)
         break
       case 'OPTIONS':
-        response = await fetch('http://localhost:8000/api/products', {
+        response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/products`, {
           method: 'OPTIONS'
         });
         data = await response.json()

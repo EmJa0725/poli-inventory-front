@@ -3,22 +3,26 @@
 export default async function handler(req, res) {
     try {
         let response, data;
+        console.log(req.body);
         switch (req.method) {
-            case 'PUT':
-                response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/products/${req.query.id}`, {
-                    method: 'PUT',
-                    body: JSON.stringify(req.body),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
+            case 'GET':
+                response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/inventory`)	
                 data = await response.json()
 
                 res.status(200).json(data)
                 break
-            case 'DELETE':
-                response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/products/${req.query.id}`, {
-                    method: 'DELETE',
+            case 'OPTIONS':
+                response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/inventory`, {
+                    method: 'OPTIONS'
+                });
+                data = await response.json()
+
+                res.status(200).json(data)
+                break
+            case 'PUT':
+                response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/inventory`, {
+                    method: 'PUT',
+                    body: JSON.stringify(req.body),
                     headers: {
                         'Content-Type': 'application/json'
                     }

@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import styles from '@/styles/Home.module.css'
 
 export default function Layout({ children, title = 'Poli Inventory' }) {
@@ -13,22 +14,14 @@ export default function Layout({ children, title = 'Poli Inventory' }) {
             <main className={styles.main}>
                 <h1 className={styles.title}>Poli Inventory</h1>
                 <div className={styles.grid}>
-                    <a href="/products" className={styles.card}>
+                    <Link href="/products" className={styles.card}>
                         <h3>Products</h3>
                         <p>View all products</p>
-                    </a>
-                    <a href="/products/add" className={styles.card}>
-                        <h3>Add Product</h3>
-                        <p>Add a new product</p>
-                    </a>
-                    <a href="/products/edit" className={styles.card}>
-                        <h3>Edit Product</h3>
+                    </Link>
+                    <Link href="/inventory" className={styles.card}>
+                        <h3>Inventory</h3>
                         <p>Edit a product</p>
-                    </a>
-                    <a href="/products/delete" className={styles.card}>
-                        <h3>Delete Product</h3>
-                        <p>Delete a product</p>
-                    </a>
+                    </Link>
                 </div>
                 {children}
             </main>
